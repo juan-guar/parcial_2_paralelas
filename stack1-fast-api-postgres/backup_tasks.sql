@@ -25,6 +25,7 @@ SET default_table_access_method = heap;
 --
 -- Name: tasks; Type: TABLE; Schema: public; Owner: postgres
 --
+
 CREATE TABLE public.tasks (
     id integer NOT NULL,
     title character varying(100) NOT NULL,
@@ -54,38 +55,41 @@ ALTER TABLE public.tasks_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.tasks_id_seq OWNED BY public.tasks.id;
-CREATE TABLE public.tasks (
-    id integer NOT NULL,
-    title character varying(100) NOT NULL,
-    completed boolean DEFAULT false
-);
 
-
-ALTER TABLE public.tasks OWNER TO postgres;
 
 --
--- Name: tasks_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: tasks id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.tasks_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+ALTER TABLE ONLY public.tasks ALTER COLUMN id SET DEFAULT nextval('public.tasks_id_seq'::regclass);
 
-
-ALTER TABLE public.tasks_id_seq OWNER TO postgres;
 
 --
--- Name: tasks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Data for Name: tasks; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.tasks_id_seq OWNED BY public.tasks.id;
+COPY public.tasks (id, title, completed) FROM stdin;
+1       Probar Kubernetes       f
+\.
+
+
+--
+-- Name: tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tasks_id_seq', 1, true);
+
+
+--
+-- Name: tasks tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tasks
+    ADD CONSTRAINT tasks_pkey PRIMARY KEY (id);
+
+
 --
 -- PostgreSQL database dump complete
 --
 
 \unrestrict i9qjb84omR11uvBrpZX2s6ivN2mWEobQcXgre2JxC4uepu6Nh6C8BZpHPPrlFEN
-
